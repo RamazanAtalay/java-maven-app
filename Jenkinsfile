@@ -1,30 +1,31 @@
-#!/usr/bin/env groovy
 pipeline {
     agent any
     tools {
-        maven 'maven-3.8'
+        maven 'Maven'
+    }
+    environment {
+        IMAGE_NAME = 'nanajanashia/demo-app:java-maven-2.0'
     }
     stages {
-        stage('build jar') {
+        stage('build app') {
             steps {
-                script {
-                    echo "Building the application..."
-                    sh 'mvn package'
-                }
+               script {
+                  echo 'building application jar...'
+                  buildJar()
+               }
             }
         }
         stage('build image') {
             steps {
                 script {
-                    echo "Building the docker image..."
-                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
-                             sh 'docker build -t ratalay35/my-repo:jma-2.2 .'
-                             sh "echo $PASS | docker login -u $USER --password-stdin"
-                             sh 'docker push ratalay35/my-repo:jma-2.2'
-                     }
-                }                                                                                          
+                   echo 'building docker image...'
+                   buildImage(env.IMAGE_NAME)
+                   dockerLogin()
+                   dockerPush(env.IMAGE_NAME)
+                }
             }
         }
+
         stage('deploy') {
             steps {
                 script {
