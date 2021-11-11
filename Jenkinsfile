@@ -1,16 +1,15 @@
 #!/usr/bin/env groovy
-
 pipeline {
-tools {
-maven 'maven-3.8'
-}
-    agent none
+    agent any
+    tools {
+        maven 'maven-3.8'
+    }
     stages {
         stage('build jar') {
             steps {
                 script {
                     echo "Building the application..."
-                    ssh 'mvn package'
+                    sh 'mvn package'
                 }
             }
         }
@@ -21,7 +20,8 @@ maven 'maven-3.8'
                      withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER' ) ])
                              sh 'docker build -t ratalay35/my-repo:jma-2.2 .'
                              sh "echo $PASS | docker login -u $USER --password-stdin"
-                             sh 'docker push ratalay35/my-repo:jma-2.2 '
+                             sh 'docker push ratalay35/my-repo:jma-2.2'
+                     }
                 }                                                                                          
             }
         }
@@ -29,7 +29,7 @@ maven 'maven-3.8'
             steps {
                 script {
                     echo "Deploying the application..."
-                           }
+
                 }
             }
         }
