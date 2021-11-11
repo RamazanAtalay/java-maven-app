@@ -1,34 +1,32 @@
 pipeline {
-    agent any
-    tools {
-        maven 'maven-3.8'
-    }
-    stages {
-        stage('build app') {
-            steps {
-               script {
-                  echo 'building application jar...'
-                  sh 'mvn package'
-               }
-            }
-        }
-        stage('build image') {
-            steps {
-                script {
-                 echo "Building the docker image..."
-                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
-                             sh 'docker build -t ratalay35/my-repo:jma-2.2 .'
-                             sh "echo $PASS | docker login -u $USER --password-stdin"
-                             sh 'docker push ratalay35/my-repo:jma-2.2'
-                }
-            }
-        }
-        stage('deploy') {
-            steps {
-                script {
-                    echo "Deploying the application..."
-                }
-            }
-        }
-    }
+environment {
+registry = "ratalay35/my-repo"
+registryCredential = 'docker-hub-repo'
+dockerImage = ''
 }
+agent any
+stages {
+stage('Cloning our Git') {
+steps {
+git 'https://github.com/ratalay35/java-maven-app.git'
+}
+}
+stage('Building our image') {
+steps{
+script {
+dockerImage = docker.build registry + ":$BUILD_NUMBER"
+}
+}
+}
+stage('Deploy our image') {
+steps{
+script {
+docker.withRegistry( '', registryCredential ) {
+dockerImage.push()
+}
+}
+}
+}
+}
+}
+
