@@ -3,9 +3,6 @@ pipeline {
     tools {
         maven 'maven-3.8'
     }
-    environment {
-        IMAGE_NAME = 'ratalay35/my-repo:java-maven-2.0'
-    }
     stages {
         stage('build app') {
             steps {
@@ -26,7 +23,6 @@ pipeline {
                 }
             }
         }
-
         stage('deploy') {
             steps {
                 script {
