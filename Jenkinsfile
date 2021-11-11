@@ -29,8 +29,7 @@ maven 'maven-3.8'
             steps {
                 script {
                     echo "Deploying the application..."
-                    echo "Building version ${SEVER_SERVER_CREDENTIALS}"
-                    sh "${SEVER_SERVER_CREDENTIALS}"
+                           }
                 }
             }
         }
