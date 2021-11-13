@@ -1,44 +1,38 @@
+#!/usr/bin/env groovy
+
+def gv
+
 pipeline {
-    agent none
-    tools {
-        maven 'maven-3.8'
-    }
+    agent any
     stages {
-        stage('test') {
+        stage("init") {
             steps {
                 script {
-                    echo "Building the application..."
-                    echo "Executing pipeline for the branch $BRANCH_NAME"
-                   // sh 'mvn package'
+                    gv = load "script.groovy"
                 }
             }
         }
-        stage('build') {
-            when {
-                expression{
-                      BRANCH_NAME == 'master'
+        stage("Build Jar") {
+            steps {
+                script {
+                    echo "Building Jar File"
+                    gv.buildJar()
                 }
             }
+        }
+        stage("Build Image") {
             steps {
                 script {
-                    echo "Building the docker image..."
-                    // withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
-                      //       sh 'docker build -t ratalay35/my-repo:jma-2.2 .'
-                        //     sh "echo $PASS | docker login -u $USER --password-stdin"
-                          //   sh 'docker push ratalay35/my-repo:jma-2.2'
-                     }
-                }                                                                                          
+                    echo "Building Image"
+                    gv.buildImage()
+                }
             }
         }
-        stage('deploy') {
-             when {
-                   expression{
-                        BRANCH_NAME == 'master'
-                   }
-             }
+        stage("Deploy") {
             steps {
                 script {
-                    echo "Deploying the application..."
+                    echo "Deploying the Image"
+                    gv.deployApp()
                 }
             }
         }
