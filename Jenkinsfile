@@ -1,36 +1,29 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent none
-    tools {
-        maven 'Maven'
-    }
     stages {
-        stage('test') {
+        stage('build') {
             steps {
                 script {
                     echo "Building the application..."
-                    echo "Executing pipeline for the branch"
-                   // sh 'mvn package'
-                }
                 }
             }
         }
-        stage('build') {
-           steps {
+        stage('test') {
+            steps {
                 script {
-                    echo "Building the application..."
-                    echo "Executing pipeline for the branch"
-                   // sh 'mvn package'
+                    echo "Testing the application..."
                 }
             }
         }
         stage('deploy') {
-              steps {
+            steps {
                 script {
-                    echo "Building the application..."
-                    echo "Executing pipeline for the branch"
-                   // sh 'mvn package'
+                    echo "Deploying the application..."
                 }
             }
         }
-        
     }
+}
+
