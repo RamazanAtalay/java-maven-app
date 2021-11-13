@@ -11,6 +11,7 @@ pipeline {
                     echo "Executing pipeline for the branch"
                    // sh 'mvn package'
                 }
+                }
             }
         }
         stage('build') {
