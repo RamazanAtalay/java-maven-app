@@ -1,7 +1,8 @@
 FROM openjdk:8-jre-alpine
 
-ARG JAR_FILE=target/java-maven-app-1.1.0-SNAPSHOT.jar
+EXPOSE 8080
 
-COPY ${JAR_FILE} app.jar
+COPY ./target/java-maven-app-*.jar /usr/app/
+WORKDIR /usr/app
 
-ENTRYPOINT ["java", "-jar",  "/app.jar"]
+CMD java -jar java-maven-app-*.jar
