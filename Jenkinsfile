@@ -37,7 +37,7 @@ pipeline {
                             passwordVariable: 'PASS')]) {
 
                         echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
-                        sh "docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
+                        sh "sudo docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
                     }
                 }
             }
