@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent any
     options {
@@ -7,9 +9,9 @@ pipeline {
         maven 'Maven'
     }
     stages {
-        stage('Incrementing Version'){
-            steps{
-                script{
+        stage('Incrementing Version') {
+            steps {
+                script {
                     echo "\033[35m This is the incrementing the app version step \033[0m"
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
@@ -31,13 +33,12 @@ pipeline {
         stage("Building Image") {
             steps {
                 script {
-
+                    echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo',
                             usernameVariable: 'USER',
                             passwordVariable: 'PASS')]) {
-
-                        echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
-                        sh "sudo docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
                     }
                 }
             }
@@ -50,7 +51,7 @@ pipeline {
                             usernameVariable: 'USER',
                             passwordVariable: 'PASS')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "sudo docker push ramazanatalay/my-repo:${IMAGE_NAME}"
+                        sh "docker push ramazanatalay/my-repo:${IMAGE_NAME}"
                     }
                 }
             }
