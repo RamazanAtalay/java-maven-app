@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
-                    sh "docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
+                    sh "sudo docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
                             usernameVariable: 'USER',
                             passwordVariable: 'PASS')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push ramazanatalay/my-repo:${IMAGE_NAME}"
+                        sh "sudo docker push ramazanatalay/my-repo:${IMAGE_NAME}"
                     }
                 }
             }
