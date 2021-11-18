@@ -66,7 +66,9 @@ pipeline {
                         sh 'git commit -m "ci: version bump"'
 //                        sh 'git push origin HEAD:jenkins-jobs'
 //                        sh "git push -fq 'https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git'"
-                        sh "git push -fq https://ratalay35:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
+                        sh "git push -fq origin HEAD:jenkins-jobs"
+
+ //                       sh "git push -fq https://ratalay35:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
                     }
                 }
             }
