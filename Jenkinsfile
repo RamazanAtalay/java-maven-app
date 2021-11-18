@@ -53,7 +53,7 @@ pipeline {
             steps {
                 script {
                     echo "\033[36m This is the commit to update the POM.xml file by ${IMAGE_NAME} in the git repository\033[0m"
-                    withCredentials([usernamePassword(credentialsId: 'GitHub-Credentials',
+                    withCredentials([usernamePassword(credentialsId: 'Jenkins-GitHub-ratalay',
                             usernameVariable: 'GITHUB_APP',
                             passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
                         //     sh 'git config --global user.email "ramazanatalay@gmail.com"'
@@ -62,11 +62,11 @@ pipeline {
                              sh 'git branch'
                         //    sh 'git config --list'
 
-                        sh "git remote set-url origin https://${GITHUB_APP}:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git"
+                        sh "git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:jenkins-jobs'
-//                        sh "git push https://${GITHUB_APP}:${GITHUB_ACCESS_TOKEN}@github.com/${GITHUB_APP}/java-maven-app.git"
+//                        sh 'git push origin HEAD:jenkins-jobs'
+                        sh "git push https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git"
                     }
                 }
             }
