@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     echo "\033[35m This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo',
+                    withCredentials([usernamePassword(credentialsId: 'dockerHub',
                             usernameVariable: 'USER',
                             passwordVariable: 'PASS')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
