@@ -59,7 +59,7 @@ pipeline {
                         //     sh 'git config --global user.email "ramazanatalay@gmail.com"'
                         //   sh 'git config --global user.name "Ramazan Atalay"'
                         // sh 'git status'
-                        //      sh 'git branch'
+                             sh 'git branch'
                         //    sh 'git config --list'
 
                         sh "git remote set-url origin https://${GITHUB_APP}:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git"
