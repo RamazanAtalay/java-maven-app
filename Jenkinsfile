@@ -59,16 +59,17 @@ pipeline {
                         //     sh 'git config --global user.email "ramazanatalay@gmail.com"'
                         //   sh 'git config --global user.name "Ramazan Atalay"'
                         // sh 'git status'
+                       sh "git config remote.origin.url 'https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git'"
                              sh 'git branch'
                         //    sh 'git config --list'
 
                         sh "git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git"
                         sh 'git add -f .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:jenkins-jobs'
-//                        sh "git push -fq https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git"
+//                        sh 'git push origin HEAD:jenkins-jobs'
+//                        sh "git push -fq 'https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git'"
 
-//                        sh "git push https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
+                        sh "git push https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
                     }
                 }
             }
