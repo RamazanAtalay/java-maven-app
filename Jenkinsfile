@@ -35,8 +35,8 @@ pipeline {
                 script {
                     echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo',
-                            usernameVariable: 'USER',
-                            passwordVariable: 'PASS')]) {
+                            passwordVariable: 'PASS',
+                            usernameVariable: 'USER')]) {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh "docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
                     }
