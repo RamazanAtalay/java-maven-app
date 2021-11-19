@@ -68,12 +68,13 @@ pipeline {
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
-                        sh 'git remote set-url origin https://${credentialsId}@github.com/ratalay35/java-maven-app.git'
+
                         sh 'git add -f .'
                         sh 'git commit -m "ci: version bump"'
+                        sh 'git remote set-url origin https://${credentialsId}@github.com/ratalay35/java-maven-app.git'
 //                        sh 'git push origin HEAD:jenkins-jobs'
 //                        sh "git push -fq 'https://${credentialsId}@github.com/ratalay35/java-maven-app.git'"
-                        sh 'git push -fq origin HEAD:jenkins-jobs'
+                        sh 'git push -u -fq origin HEAD:jenkins-jobs'
 
  //                       sh "git push -fq https://ratalay35:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
 //                    }
