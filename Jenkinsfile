@@ -86,9 +86,9 @@ pipeline {
 ////                        sh 'git push origin HEAD:jenkins-jobs'
 //                        sh 'git push -fq 'https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git''
                        // sh 'git push -u -fq origin HEAD:jenkins-jobs'
-                    https://github.com/ratalay35/java-maven-app.git
+//                    https://github.com/ratalay35/java-maven-app.git
  //                       sh "git push -fq https://ratalay35:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
-                    }
+                            }
                 }
             }
         }
