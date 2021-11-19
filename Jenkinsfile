@@ -56,8 +56,7 @@ pipeline {
                     echo "\033[36m This is the commit to update the POM.xml file by ${IMAGE_NAME} in the git repository\033[0m"
 //                    withCredentials([usernamePassword(credentialsId: 'Jenkins-GitHub-ratalay',
 //                            usernameVariable: 'GITHUB_APP',
-//                            passwordVariable: 'GITHUB_ACCESS_TOKEN')])
-                            {
+//                            passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
 
 
                                 GITHUB_ACCESS_TOKEN: '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'
@@ -77,7 +76,7 @@ pipeline {
                         sh 'git push -fq origin HEAD:jenkins-jobs'
 
  //                       sh "git push -fq https://ratalay35:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
-                    }
+//                    }
                 }
             }
         }
