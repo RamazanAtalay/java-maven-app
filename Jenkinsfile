@@ -70,7 +70,7 @@ pipeline {
 //                                    sh 'git config user.email "${GIT_COMMITTER_EMAIL}"'
 //                                    sh 'git config user.name "${GIT_COMMITTER_NAME}"'
                                     sh "git remote rm origin"
-                                    sh 'git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git > /dev/null 2>&1'
+                                    sh 'git remote add origin https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git > /dev/null 2>&1'
                                     sh "git commit -am 'Commit message'"
                                     sh 'git push origin https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git:jenkins-jobs > /dev/null 2>&1'
 
