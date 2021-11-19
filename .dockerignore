@@ -1,6 +1,17 @@
-*.docx
+#Ignore the target directory
 target/
-passphrase.txt
+
+#Ignore the logs directory
+logs/
+
+#Ignoring the password file
+passwords.txt
+
+#Ignoring git and cache folders
 .git
-*.md
 .cache
+
+#Ignoring all the markdown and class files
+*.docx
+*.md
+**/*.class
