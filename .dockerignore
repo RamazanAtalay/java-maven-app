@@ -1,5 +1,5 @@
 *.docx
-target
+target/
 passphrase.txt
 .git
 *.md
