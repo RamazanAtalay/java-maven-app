@@ -1,2 +1,5 @@
+#Ignore the .idea directory
 .idea/*
-target
+
+#Ignore the target directory
+target/
