@@ -3,6 +3,7 @@ pipeline {
     options {
         ansiColor('xterm')
     }
+
     tools {
         maven 'Maven'
     }
@@ -10,7 +11,7 @@ pipeline {
         stage('Incrementing Version'){
             steps{
                 script{
-                    echo "\033[35m This is the incrementing the app version step \033[0m"
+                    echo '\033[35m This is the incrementing the app version step \033[0m'
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                          versions:commit'
@@ -56,17 +57,23 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'Jenkins-GitHub-ratalay',
                             usernameVariable: 'GITHUB_APP',
                             passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
-                        sh 'git config --global user.email "ramazanatalay@gmail.com"'
+
+                        git branch: 'jenkins-jobs',
+                                credentialsId: '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',
+                                url: 'git@github.com:ratalay35/java-maven-app.git'
+
+
+                        sh 'git config --global user.email "jenkins@gmail.com"'
                         sh 'git config --global user.name "Ramazan Atalay"'
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
-                        sh "git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git"
+                        sh 'git remote set-url origin https://${credentialsId}@github.com/ratalay35/java-maven-app.git'
                         sh 'git add -f .'
                         sh 'git commit -m "ci: version bump"'
 //                        sh 'git push origin HEAD:jenkins-jobs'
-//                        sh "git push -fq 'https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git'"
-                        sh "git push -fq origin HEAD:jenkins-jobs"
+//                        sh "git push -fq 'https://${credentialsId}@github.com/ratalay35/java-maven-app.git'"
+                        sh 'git push -fq origin HEAD:jenkins-jobs'
 
  //                       sh "git push -fq https://ratalay35:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
                     }
