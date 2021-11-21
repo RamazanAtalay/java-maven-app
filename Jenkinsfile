@@ -7,7 +7,7 @@ pipeline {
         maven 'Maven'
     }
     stages {
-        stage('Incrementing Version'){
+        stage('1: Incrementing Version'){
             steps {
                 script {
                     echo '\033[35m This is the incrementing the app version step \033[0m'
@@ -20,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage("Building File") {
+        stage("2: Building File") {
             steps{
                 script{
                     echo "\033[35m This is the building the .jar file for the app step \033[0m"
@@ -28,7 +28,7 @@ pipeline {
                 }
             }
         }
-        stage("Building Image") {
+        stage("3: Building Image") {
             steps {
                 script {
                     echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
@@ -36,7 +36,7 @@ pipeline {
                 }
             }
         }
-        stage("Deploying Image") {
+        stage("4: Deploying Image") {
             steps {
                 script {
                     echo "\033[35m This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
@@ -49,7 +49,7 @@ pipeline {
                 }
             }
         }
-        stage("Running App") {
+        stage("5: Running App") {
             steps {
                 script {
                     echo "\033[35m This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
@@ -60,7 +60,7 @@ pipeline {
                 }
             }
         }
-        stage("Commit Version Update") {
+        stage("6: Commit Version Update") {
             steps {
                 script {
                     echo "\033[36m This is the commit to update the POM.xml file by ${IMAGE_NAME} in the git repository\033[0m"
