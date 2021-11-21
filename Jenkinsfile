@@ -9,9 +9,9 @@ pipeline {
         maven 'Maven'
     }
     stages {
-        stage('Incrementing Version'){
-            steps{
-                script{
+        stage('Incrementing Version') {
+            steps {
+                script {
                     echo '\033[35m This is the incrementing the app version step \033[0m'
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
