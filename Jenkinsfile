@@ -8,8 +8,8 @@ pipeline {
     }
     stages {
         stage('Incrementing Version'){
-            steps{
-                script{
+            steps {
+                script {
                     echo '\033[35m This is the incrementing the app version step \033[0m'
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
@@ -21,8 +21,8 @@ pipeline {
             }
         }
         stage("Building File") {
-            steps {
-                script {
+            steps{
+                script{
                     echo "\033[35m This is the building the .jar file for the app step \033[0m"
                     sh 'mvn clean package'
                 }
@@ -52,6 +52,7 @@ pipeline {
         stage("Running App") {
             steps {
                 script {
+                    echo "\033[35m This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
 //                    def dockerCmd= 'docker run -d -p 3080:3080 ramazanatalay/my-repo:1.1.8-33'
 //                    sshagent(['ec2-server-NVirginia-key']) {
 //                        sh"ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${dockerCmd}"
