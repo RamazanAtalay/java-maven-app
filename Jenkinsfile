@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
-//   /                 sh "docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
+                    sh "docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
                 }
             }
         }
@@ -54,10 +54,10 @@ pipeline {
         stage("Commit Version Update") {
             steps {
                 script {
-                    def dockerCmd= 'docker run -d -p 3080:3080 ramazanatalay/my-repo:1.1.8-33'
-                    sshagent(['ec2-server-key']) {
-                        sh"ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${dockerCmd}"
-                    }
+//                    def dockerCmd= 'docker run -d -p 3080:3080 ramazanatalay/my-repo:1.1.8-33'
+//                    sshagent(['ec2-server-NVirginia-key']) {
+//                        sh"ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${dockerCmd}"
+//                    }
                 }
             }
         }
