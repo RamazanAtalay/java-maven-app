@@ -5,7 +5,6 @@ pipeline {
     options {
         ansiColor('xterm')
     }
-
     tools {
         maven 'Maven'
     }
@@ -55,7 +54,7 @@ pipeline {
         stage("Commit Version Update") {
             steps {
                 script {
-                    def dockerCmd= 'docker run -d -p 3080:3080 ramazanatalay/my-repo:1.0'
+                    def dockerCmd= 'docker run -d -p 3080:3080 ramazanatalay/my-repo:1.1.8-33'
                     sshagent(['ec2-server-key']) {
                         sh"ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${dockerCmd}"
                     }
