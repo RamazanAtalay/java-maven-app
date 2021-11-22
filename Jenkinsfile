@@ -55,7 +55,7 @@ pipeline {
                     echo "\033[35m This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
                     def dockerCmd= 'docker run -d -p 3080:3080 ramazanatalay/my-repo:${IMAGE_NAME}'
                     sshagent(['ec2-server-NVirginia-key']) {
-                        sh"ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${dockerCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${dockerCmd}"
                     }
                 }
             }
