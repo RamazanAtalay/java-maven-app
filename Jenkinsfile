@@ -60,7 +60,7 @@ pipeline {
                 }
             }
         }
-        stage("6: Commit Version Update") {
+        stage("6: Commit the Version Update") {
             steps {
                 script {
                     echo "\033[36m This is the commit to update the POM.xml file by ${IMAGE_NAME} in the git repository\033[0m"
