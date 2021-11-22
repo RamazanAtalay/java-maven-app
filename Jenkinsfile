@@ -53,10 +53,12 @@ pipeline {
             steps {
                 script {
                     echo "\033[35m This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
-                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
+                    def shellCmd = "bash ./server-cmds.sh"
+//                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
                     sshagent(['ec2-server-NVirginia-key']) {
+                        sh "scp server-cmds.sh ec2-user@3.85.118.21:/home/ec2-user"
                         sh "scp docker-compose.yaml ec2-user@3.85.118.21:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${dockerComposeCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.85.118.21 ${shellCmd}"
                     }
                 }
             }
