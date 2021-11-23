@@ -16,7 +16,7 @@ pipeline {
                          versions:commit'
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                     def version = matcher[0][1]
-                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+                    env.IMAGE_NAME = "java-maven-app-$version-$BUILD_NUMBER"
                     echo "IMAGE_NAME:${IMAGE_NAME}, version:${version}, and BUILD_NUMBER:${BUILD_NUMBER}"
                 }
             }
@@ -72,8 +72,8 @@ pipeline {
                             usernameVariable: 'GITHUB_APP',
                             passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
 
-                        sh 'git config --global user.email "you@example.com"'
-                        sh 'git config --global user.name "Your Name"'
+                        sh 'git config --global user.email "jenkins@example.com"'
+                        sh 'git config --global user.name "jenkins"'
 
                         sh "git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ramazan-atalay/java-maven-app.git > /dev/null 2>&1"
                         sh 'git add .'
