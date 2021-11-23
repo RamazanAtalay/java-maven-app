@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   java-maven-app:
-    image: ramazanatalay/my-repo:1.1.8-7
+    image: ${IMAGE_NAME}
     ports:
       - "8080:8080"
   postgres:
