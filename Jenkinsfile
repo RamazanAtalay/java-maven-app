@@ -19,7 +19,7 @@ pipeline {
 //                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                     env.IMAGE_NAME = "java-maven-app-${version}"
 //                    env.IMAGE_NAME = "$version"
-                    echo "IMAGE_NAME:${IMAGE_NAME}, version:${version}, and BUILD_NUMBER:{$BUILD_NUMBER}"
+                    echo "IMAGE_NAME:${IMAGE_NAME}, version:${version}, and BUILD_NUMBER:${BUILD_NUMBER}"
                 }
             }
         }
