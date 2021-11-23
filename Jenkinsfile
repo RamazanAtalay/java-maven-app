@@ -76,7 +76,6 @@ pipeline {
                         sh 'git config --global user.name "Your Name"'
 
                         sh "git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ramazan-atalay/java-maven-app.git > /dev/null 2>&1"
-
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
                         sh 'git push origin HEAD:jenkins-deploy-ec2-from-jenkins-pipeline'
