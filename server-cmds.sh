@@ -2,7 +2,7 @@
 
 export IMAGE_NAME=$1
 
-sudo docker-compose up -d
+docker-compose up -d
 
 echo "success"
 
