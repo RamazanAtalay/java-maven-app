@@ -71,25 +71,15 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'GitHub',
                             usernameVariable: 'GITHUB_APP',
                             passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
+
                         sh 'git config --global user.email "you@example.com"'
                         sh 'git config --global user.name "Your Name"'
 
                         sh "git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ramazan-atalay/java-maven-app.git > /dev/null 2>&1"
-//                        sh "git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ramazan-atalay/java-maven-app.git > /dev/null 2>&1"
+
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
                         sh 'git push origin HEAD:jenkins-deploy-ec2-from-jenkins-pipeline'
-//                        sh 'git push origin https://${GITHUB_ACCESS_TOKEN}@github.com/ramazan-atalay/java-maven-app.git:jenkins-jobs > /dev/null 2>&1'
-
-//                        //
-//                        sh 'git add -f .'
-//                        sh 'git commit -m "ci: version bump"'
-//                        sh 'git remote set-url origin https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git'
-////                        sh 'git push origin HEAD:jenkins-jobs'
-//                        sh 'git push -fq 'https://${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git''
-                        // sh 'git push -u -fq origin HEAD:jenkins-jobs'
-//                    https://github.com/ratalay35/java-maven-app.git
-                        //                       sh "git push -fq https://ratalay35:${GITHUB_ACCESS_TOKEN}@github.com/ratalay35/java-maven-app.git HEAD:jenkins-jobs"
                     }
                 }
             }
