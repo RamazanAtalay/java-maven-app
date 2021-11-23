@@ -7,10 +7,10 @@ pipeline {
         maven 'Maven'
     }
     stages {
-        stage('1: Incrementing Version'){
+        stage('1:Incrementing Version'){
             steps {
                 script {
-                    echo '\033[35m 1: This is the incrementing the app version step \033[0m'
+                    echo '\033[34m1:This is the incrementing the app version step \033[0m'
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                          versions:commit'
@@ -21,26 +21,26 @@ pipeline {
                 }
             }
         }
-        stage("2: Building File") {
+        stage("2:Building File") {
             steps{
                 script{
-                    echo "\033[35m 2: This is the building the .jar file for the app step \033[0m"
+                    echo "\033[34m2:This is the building the ${IMAGE_NAME}.jar file for the app step \033[0m"
                     sh 'mvn clean package'
                 }
             }
         }
-        stage("3: Building Image") {
+        stage("3:Building Image") {
             steps {
                 script {
-                    echo "\033[35m This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
+                    echo "\033[34m3:This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
                     sh "docker build -t ramazanatalay/my-repo:${IMAGE_NAME} ."
                 }
             }
         }
-        stage("4: Deploying Image") {
+        stage("4:Deploying Image") {
             steps {
                 script {
-                    echo "\033[35m 4: This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
+                    echo "\033[34m4:This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
                     withCredentials([usernamePassword(credentialsId: 'dockerHub',
                             passwordVariable: 'PASS',
                             usernameVariable: 'USER')]) {
@@ -50,10 +50,10 @@ pipeline {
                 }
             }
         }
-        stage("5: Running App") {
+        stage("5:Running App") {
             steps {
                 script {
-                    echo "\033[35m 5: This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
+                    echo "\033[34m5:This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
                     def ec2Instance = "ec2-user@3.85.118.21"
                     sshagent(['ec2-server-NVirginia-key']) {
@@ -64,10 +64,10 @@ pipeline {
                 }
             }
         }
-        stage("6: Committing Version Update") {
+        stage("6:Committing Version") {
             steps {
                 script {
-                    echo "\033[36m 6: This is the commit to update the POM.xml file by ${IMAGE_NAME} in the git repository\033[0m"
+                    echo "\033[34m6:This is the commit to update the POM.xml file by ${IMAGE_NAME} in the git repository\033[0m"
                     withCredentials([usernamePassword(credentialsId: 'GitHub',
                             usernameVariable: 'GITHUB_APP',
                             passwordVariable: 'GITHUB_ACCESS_TOKEN')]) {
