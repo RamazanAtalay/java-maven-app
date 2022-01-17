@@ -1,11 +1,11 @@
-terraform {
-  required_version = ">= 0.12"
-  backend "s3" {
-    bucket = "myapp-bucket"
-    key    = "myapp/state.tfstate"
-    region = "eu-west-3"
-  }
-}
+# terraform {
+#   required_version = ">= 0.12"
+#   backend "s3" {
+#     bucket = "myapp-bucket"
+#     key    = "myapp/state.tfstate"
+#     region = "us-east-1"
+#   }
+# }
 
 provider "aws" {
   region = var.region
@@ -18,12 +18,12 @@ resource "aws_vpc" "myapp-vpc" {
   }
 }
 
-resource "aws_subnet" "myapp-subnet-1" {
+resource "aws_subnet" "myapp-subnet" {
   vpc_id            = aws_vpc.myapp-vpc.id
   cidr_block        = var.subnet_cidr_block
   availability_zone = var.avail_zone
   tags = {
-    Name : "${var.env_prefix}-subnet-1"
+    Name : "${var.env_prefix}-subnet"
   }
 }
 
@@ -93,7 +93,7 @@ resource "aws_instance" "myapp-server" {
   ami           = data.aws_ami.latest-amazon-linux-image.id
   instance_type = var.instance_type
 
-  subnet_id              = aws_subnet.myapp-subnet-1.id
+  subnet_id              = aws_subnet.myapp-subnet.id
   vpc_security_group_ids = [aws_default_security_group.default-sg.id]
   availability_zone      = var.avail_zone
 
