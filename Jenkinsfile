@@ -6,9 +6,10 @@ pipeline {
     }
     tools {
         maven 'Maven'
+        terraform 'Terraform'
     }
     stages {
-        stage('1:Incrementing Version'){
+        stage('1:Incrementing Version birsey'){
             steps {
                 script {
                     echo '\033[34m1:This is the incrementing the app version step \033[0m'
