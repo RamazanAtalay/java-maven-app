@@ -1,12 +1,4 @@
 #!/usr/bin/env groovy
-
-// library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
-//     [$class: 'GitSCMSource',
-//      remote: 'https://gitlab.com/nanuchi/jenkins-shared-library.git',
-//      credentialsId: 'gitlab-credentials'
-//     ]
-// )
-
 pipeline {
     agent any
     options {
@@ -14,9 +6,6 @@ pipeline {
     }
     tools {
         maven 'Maven'
-    }
-    environment {
-        IMAGE_NAME = 'ramazanatalay/my-repo:java-maven-1.0'
     }
     stages {
         stage('1:Incrementing Version'){
