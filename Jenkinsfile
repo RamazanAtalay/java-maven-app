@@ -9,7 +9,7 @@ pipeline {
         terraform 'Terraform'
     }
     stages {
-        stage('1:Incrementing Version birsey'){
+        stage('1:Incrementing'){
             steps {
                 script {
                     echo '\033[34m1:This is the incrementing the app version step \033[0m'
@@ -23,7 +23,7 @@ pipeline {
                 }
             }
         }
-        stage("2:Building File") {
+        stage("2:Packaging") {
             steps{
                 script{
                     echo "\033[34m2:This is the building the ${IMAGE_NAME}.jar file for the app step \033[0m"
@@ -31,7 +31,7 @@ pipeline {
                 }
             }
         }
-        stage("3:Building Image") {
+        stage("3:Building") {
             steps {
                 script {
                     echo "\033[34m3:This is the building the docker image tagged by ${IMAGE_NAME} \033[0m"
@@ -39,7 +39,7 @@ pipeline {
                 }
             }
         }
-        stage("4:Deploying Image") {
+        stage("4:Deploying") {
             steps {
                 script {
                     echo "\033[34m4:This is the deploying the tagged ${IMAGE_NAME} to docker hub \033[0m"
@@ -52,7 +52,7 @@ pipeline {
                 }
             }
         }
-        stage('provision server') {
+        stage("5:Provisioning") {
             environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                 AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
@@ -60,6 +60,7 @@ pipeline {
             }
             steps {
                 script {
+                echo "\033[34m4:This is the EC2 provisioning step for tagged ${IMAGE_NAME} \033[0m"
                     dir('terraform') {
                         sh "terraform init"
                         sh "terraform apply --auto-approve"
@@ -71,7 +72,7 @@ pipeline {
                 }
             }
         }
-        stage('deploy') {
+        stage("6:Running") {
             environment {
                 DOCKER_CREDS = credentials('dockerHub')
             }
@@ -84,7 +85,7 @@ pipeline {
                    echo "${EC2_PUBLIC_IP}"
 
                    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${DOCKER_CREDS_USR} ${DOCKER_CREDS_PSW}"
-// credentials function gives values with USR and PSW prefixes
+                   // credentials function gives read/writes attributes  with USR and PSW prefixes
                    def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
 
                    sshagent(['server-ssh-key']) {
@@ -95,7 +96,7 @@ pipeline {
                 }
             }
         }
-        stage("6:Committing Version") {
+        stage("7:Committing") {
             steps {
                 script {
                     echo "\033[34m6:This is the commit to update the POM.xml file by ${IMAGE_NAME} in the git repository\033[0m"
