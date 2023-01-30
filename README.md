@@ -89,12 +89,25 @@ docker push 10.10.10.10:8083/my-image:1.0
 
 - Issue 4:
 
+If you prefer to connect a VM via ***ssh***, you will need to restrict your access key permission and it should be only readable by you.
+```
+mv ~/Downloads/AWS-Jenkins-Server.pem ~/.ssh/aws/Jenkins-Server/ \
+&&
+chmod 400 ~/.ssh/aws/Jenkins-Server/AWS-Jenkins-Server.pem \
+&&
+ssh -i ~/.ssh/aws/Jenkins-Server/AWS-Jenkins-Server.pem \
+ec2-user@10.10.10.10
+``` 
+
+- Issue 5:
+
 When you have a connection problem with your local and host server
 ```
 ssh-copy-id -i ~/.ssh/azureprivatekey.pub ramazan@10.10.10.10
 ``` 
 
-- Issue 5:
+
+- Issue 6:
 
 If you need a single layer image, you need to utilize **Docker EE**
 
@@ -102,7 +115,7 @@ If you need a single layer image, you need to utilize **Docker EE**
 docker build --squash -t singlelayer:v1 .
 ```
 
-- Issue 6:
+- Issue 7:
 
 Containers have outbound network access but ***no inbound network access***; thus, ports must be published to allow inbound network access
 
@@ -115,7 +128,7 @@ docker run -dit -p  8080:80 nginx
 docker run -dit -P  nginx
 ```
 
-- Issue 7:
+- Issue 8:
 DNS configuration fails!!!
 
 ```
