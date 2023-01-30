@@ -40,7 +40,7 @@ jenkins/jenkins:lts
 ```
 in Windows OS: C:\ProgramData\docker\volumes
 in Linux OS: /var/lib/docker/volumes
-in Mac OS: /var/lib/docker/volumes
+in Mac OS: ~/Library/Containers/com.docker.docker/
 in WSL 2: /var/data/docker-desktop/default/deamon-data
 ```
 Note: These are subject to change day by day thus keep reading <br>
@@ -48,6 +48,21 @@ Note: These are subject to change day by day thus keep reading <br>
 ## Some issues you probably need to remember !!!
 
 Issue 1:
+
+There might be quite possible that ***Docker-in-Docker (DinD)*** would be working fine but ***Docker-out-od-Docker (DooD)*** not working as expected.
+
+Which will be error of *docker not found* on the jenkins job, thus both in local machine and inside of docker container
+```
+chmod 666 /var/run/docker.sock
+```
+if you have more than one user the user must be in the docker group
+and
+```
+gPasswd -a $USER docker
+```
+If you have connection problem from local machine to remote server such as ***Jenkins***
+
+Issue 2:
 
 Docker connection token is stored in
 ```
@@ -65,7 +80,7 @@ Navigate to Docker desktop to add
 
 Note: Open the Firewall port of the VM **8083**
 
-Issue 2:
+Issue 3:
 
 When docker push fails, you need to modify tagging for your conenction
 ```
@@ -73,14 +88,14 @@ docker tag my-image:1.0 10.10.10.10:8083/my-image:1.0
 docker push 10.10.10.10:8083/my-image:1.0
 ```
 
-Issue 3:
+Issue 4:
 
 When you have a connection problem with your local and host server
 ```
 ssh-copy-id -i ~/.ssh/azureprivatekey.pub ramazan@10.10.10.10
 ``` 
 
-Issue 4:
+Issue 5:
 
 If you need a single layer image, you need to utilize **Docker EE**
 
@@ -88,7 +103,7 @@ If you need a single layer image, you need to utilize **Docker EE**
 docker build --squash -t singlelayer:v1 .
 ```
 
-Issue 5:
+Issue 6:
 
 Containers have outbound network access but ***no inbound network access***; thus, ports must be published to allow inbound network access
 
@@ -99,7 +114,7 @@ docker run -dit -P  nginx
     for default port exposed
 ```
 
-Issue 6:
+Issue 7:
 DNS configuration fails!!!
 
 ```
