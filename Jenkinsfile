@@ -1,54 +1,25 @@
 pipeline {
     agent any
+    environment {
+        tag = sh(returnStdout: true, script: "git rev-parse --short=10 HEAD").trim()
+    }
+
     stages {
-        stage('1:Incrementing'){
+        stage('Build core image') {
             steps {
-                script {
-                    echo 'This is the incrementing the app version step'                    
+                // TODO: proper tagging
+                sh "docker build -t ramazanatalay/my-repo:${tag} ."
+                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push ramazanatalay/my-repo:${tag}"
                 }
             }
         }
-        stage("2:Packaging") {
-            steps{
-                script{
-                    echo "This is the building the file for the app step"       
-                }
-            }
-        }
-        stage("3:Building") {
+        stage('Build core comment image') {
             steps {
-                script {
-                    echo "This is the building the docker image tagged by"                  
-                }
-            }
-        }
-        stage("4:Deploying") {
-            steps {
-                script {
-                    echo "This is the deploying the tagged to docker hub"
-                   
-                }
-            }
-        }
-        stage("5:Provisioning") {
-            steps {
-                script {
-                    echo "This is the EC2 provisioning step for tagged"
-                }
-            }
-        }
-        stage("6:Running") {
-            steps {
-                script {
-                   echo "This is waiting time for EC2 server to fully initialize"
-                }
-            }
-        }
-        stage("7:Committing") {
-            steps {
-                script {
-                    echo "This is the commit to update the POM.xml file by in the git repository"
-                    
+                // TODO: proper tagging
+                sh "docker build -t ramazanatalay/my-repo:${tag} ."
+                withCredentials([usernamePassword(credentialsId: 'common-dockerhub-up', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+                    sh "docker login -u ${HUB_USER} -p ${HUB_PASS} && docker push ramazanatalay/my-repo:${tag}"
                 }
             }
         }
