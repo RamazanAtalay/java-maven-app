@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 VERSION=$(git log -1 --pretty=%h)
-REPO="registry.example.com/my-project:"
+REPO="ramazanatalay/my-repo:"
 TAG="$REPO$VERSION"
 LATEST="${REPO}latest"
 BUILD_TIMESTAMP=$( date '+%F_%H:%M:%S' )
