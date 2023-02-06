@@ -1,5 +1,15 @@
 # Installing Jenkins on Linux OS as a Docker Container
 
+## Users in the Linux
+Local user information is stored in the
+```
+less /etc/passwd
+```
+Truncated usernames can be executed via
+```
+awk -F: '{ print $1}' /etc/passwd
+```
+
 ## Preparing the Server
 
 We will need to have a Linux server prepared to install Jenkins. 
@@ -67,4 +77,23 @@ pwd
 mkdir .ssh
 cd .ssh
 nano authorized_keys
+```
+
+## Running the Jenkins Container as Jenkins User
+
+SSH to our server as Jenkins user.
+```
+ssh jenkins@10.10.10.10
+```
+Run the below command to run a Jenkins container.
+```
+docker run -d --name jenkins \
+-p 8080:8080 \
+-p 50000:50000 \
+-v jenkins_home:/var/jenkins_home \
+jenkins/jenkins:lts-jdk11
+```
+Once the Docker container is started, check out the Jenkins UI by navigating to ***URL*** from a browser.
+```
+http://10.10.10.10:8080
 ```
